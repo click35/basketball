@@ -161,6 +161,49 @@
   .empty{text-align:center;padding:32px 16px;color:var(--text-muted);font-size:15px;}
   .empty-ico{font-size:40px;margin-bottom:8px;}
 
+  /* SQUAD TAB */
+  .squad-hero{background:linear-gradient(135deg,#1a3a5c,#0d2035);border-radius:var(--radius);padding:18px 16px;margin-bottom:10px;color:white;}
+  .squad-hero-title{font-family:'Bangers',cursive;font-size:28px;letter-spacing:2px;margin-bottom:2px;}
+  .squad-hero-sub{font-size:13px;opacity:.7;margin-bottom:14px;}
+  .squad-stats-row{display:flex;gap:10px;}
+  .squad-stat{flex:1;background:rgba(255,255,255,.1);border-radius:var(--radius-sm);padding:10px 8px;text-align:center;}
+  .squad-stat-num{font-family:'Bangers',cursive;font-size:26px;letter-spacing:1px;}
+  .squad-stat-lbl{font-size:10px;opacity:.7;margin-top:1px;}
+  .challenge-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:10px;}
+  .challenge-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
+  .challenge-title{font-weight:700;font-size:15px;}
+  .challenge-badge{font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;}
+  .challenge-badge.on-track{background:var(--green-light);color:var(--green);}
+  .challenge-badge.behind{background:var(--red-light);color:var(--red);}
+  .challenge-badge.crushed{background:var(--amber-light);color:var(--amber-dark);}
+  .challenge-prog-wrap{height:12px;background:var(--bg);border-radius:6px;overflow:hidden;margin-bottom:6px;}
+  .challenge-prog-fill{height:100%;border-radius:6px;transition:width 1s cubic-bezier(.22,.68,0,1.2);}
+  .challenge-prog-fill.on-track{background:var(--green);}
+  .challenge-prog-fill.behind{background:var(--orange);}
+  .challenge-prog-fill.crushed{background:var(--amber);}
+  .challenge-prog-lbl{font-size:12px;color:var(--text-muted);}
+  .challenge-edit{font-size:12px;font-weight:700;background:none;border:none;color:var(--blue);cursor:pointer;font-family:'Nunito',sans-serif;padding:0;}
+  .leaderboard-row{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border);}
+  .leaderboard-row:last-child{border-bottom:none;}
+  .lb-rank{font-family:'Bangers',cursive;font-size:22px;width:28px;text-align:center;flex-shrink:0;}
+  .lb-rank.gold{color:#F5A623;}
+  .lb-rank.silver{color:#A8A8A8;}
+  .lb-rank.bronze{color:#CD7F32;}
+  .lb-avatar{width:38px;height:38px;border-radius:50%;background:var(--orange);color:white;font-family:'Bangers',cursive;font-size:18px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .lb-info{flex:1;min-width:0;}
+  .lb-name{font-weight:700;font-size:14px;}
+  .lb-sub{font-size:12px;color:var(--text-muted);margin-top:1px;}
+  .lb-right{text-align:right;flex-shrink:0;}
+  .lb-xp{font-family:'Bangers',cursive;font-size:20px;color:var(--blue-dark);letter-spacing:1px;}
+  .lb-streak{font-size:11px;color:var(--text-muted);}
+  .week-tabs{display:flex;gap:6px;margin-bottom:12px;}
+  .week-tab{flex:1;padding:7px 4px;font-size:12px;font-weight:700;font-family:'Nunito',sans-serif;border:1.5px solid var(--border);border-radius:var(--radius-sm);background:var(--bg);color:var(--text-muted);cursor:pointer;transition:all .15s;}
+  .week-tab.active{background:var(--blue);color:white;border-color:var(--blue);}
+  .share-btn{width:100%;padding:13px;font-size:14px;font-weight:700;font-family:'Nunito',sans-serif;background:var(--orange-light);color:var(--orange-dark);border:1.5px solid rgba(216,90,48,.25);border-radius:var(--radius-sm);cursor:pointer;margin-top:8px;transition:all .15s;}
+  .share-btn:active{transform:scale(0.97);}
+  .coach-note-txt{font-size:12px;color:var(--green);font-weight:600;margin-top:4px;}
+  .coach-note-badge{display:inline-block;font-size:10px;background:var(--green-light);color:var(--green);padding:1px 7px;border-radius:10px;font-weight:700;margin-right:4px;}
+
   /* MODAL */
   .overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:100;display:flex;align-items:flex-end;justify-content:center;}
   .modal{background:var(--card);border-radius:var(--radius) var(--radius) 0 0;padding:20px 16px 36px;width:100%;max-width:500px;animation:slideUp .25s ease;}
@@ -223,6 +266,7 @@
       <button class="tab-btn" onclick="goTab('train')" id="tb-train">💪 Train</button>
       <button class="tab-btn" onclick="goTab('history')" id="tb-history">📋 History</button>
       <button class="tab-btn" onclick="goTab('badges')" id="tb-badges">🏅 Badges</button>
+      <button class="tab-btn" onclick="goTab('squad')" id="tb-squad">👥 Squad</button>
     </div>
 
     <div id="content">
@@ -252,6 +296,7 @@
           <div class="section-lbl">Recent sessions</div>
           <div id="recentList"></div>
         </div>
+        <button class="share-btn" onclick="shareCard()">📤 Share my stats</button>
       </div>
 
       <!-- TRAIN -->
@@ -296,11 +341,57 @@
         </div>
       </div>
 
-    </div>
-  </div>
-</div>
+      <!-- SQUAD -->
+      <div id="v-squad" class="view">
+        <div class="squad-hero">
+          <div class="squad-hero-title">🏀 The Squad</div>
+          <div class="squad-hero-sub">This week's combined training</div>
+          <div class="squad-stats-row">
+            <div class="squad-stat"><div class="squad-stat-num" id="sqSess">0</div><div class="squad-stat-lbl">Sessions</div></div>
+            <div class="squad-stat"><div class="squad-stat-num" id="sqMins">0</div><div class="squad-stat-lbl">Minutes</div></div>
+            <div class="squad-stat"><div class="squad-stat-num" id="sqShots">0</div><div class="squad-stat-lbl">Shots</div></div>
+          </div>
+        </div>
 
-<!-- EDIT MODAL -->
+        <div class="challenge-card" id="challengeCard">
+          <div class="challenge-header">
+            <div class="challenge-title">⚡ Weekly Team Challenge</div>
+            <button class="challenge-edit" onclick="openChallengeEdit()">Set target</button>
+          </div>
+          <div class="challenge-prog-wrap"><div class="challenge-prog-fill" id="challFill" style="width:0%"></div></div>
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <div class="challenge-prog-lbl" id="challLbl">Set a weekly minutes target for the squad</div>
+            <div class="challenge-badge" id="challBadge" style="display:none;"></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+            <div class="section-lbl" style="margin-bottom:0;">Leaderboard</div>
+            <div class="week-tabs">
+              <button class="week-tab active" id="lbTab-xp" onclick="setLbSort('xp')">XP</button>
+              <button class="week-tab" id="lbTab-week" onclick="setLbSort('week')">This week</button>
+              <button class="week-tab" id="lbTab-streak" onclick="setLbSort('streak')">Streak</button>
+            </div>
+          </div>
+          <div id="leaderboard"></div>
+        </div>
+
+        <div class="card">
+          <div class="section-lbl">Coach notes</div>
+          <div id="coachNotesList"></div>
+          <div style="margin-top:10px;">
+            <select id="coachNoteTarget" style="width:100%;padding:10px;font-size:14px;font-family:'Nunito',sans-serif;border:1.5px solid var(--border);border-radius:var(--radius-sm);background:var(--card);color:var(--text);outline:none;margin-bottom:8px;"></select>
+            <textarea id="coachNoteIn" placeholder="Leave a note for this player..." style="height:60px;"></textarea>
+            <button class="log-btn" style="margin-top:8px;padding:12px;font-size:14px;" onclick="addCoachNote()">Post note</button>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /content -->
+  </div><!-- /mainApp -->
+</div><!-- /app -->
+
 <div class="overlay" id="editModal" style="display:none;" onclick="closeOutside(event)">
   <div class="modal">
     <div class="modal-title">Edit Session</div>
@@ -327,6 +418,21 @@
       <button class="m-del" onclick="deleteSess()">🗑</button>
       <button class="m-cancel" onclick="closeModal()">Cancel</button>
       <button class="m-save" onclick="saveSess()">Save changes</button>
+    </div>
+  </div>
+</div>
+
+<!-- CHALLENGE EDIT MODAL -->
+<div class="overlay" id="challModal" style="display:none;" onclick="if(event.target===this)this.style.display='none'">
+  <div class="modal">
+    <div class="modal-title">Set Weekly Target</div>
+    <div class="mfield">
+      <label>Team minutes goal this week</label>
+      <input type="number" id="challTargetIn" min="30" max="9999" placeholder="e.g. 300" style="width:100%;font-size:22px;">
+    </div>
+    <div class="mbtns">
+      <button class="m-cancel" onclick="document.getElementById('challModal').style.display='none'">Cancel</button>
+      <button class="m-save" onclick="saveChallTarget()">Set challenge</button>
     </div>
   </div>
 </div>
@@ -658,10 +764,217 @@ function checkBadges(){
 
 // TABS
 function goTab(t){
-  ['home','train','history','badges'].forEach(x=>{
+  ['home','train','history','badges','squad'].forEach(x=>{
     document.getElementById('v-'+x).classList.toggle('active',x===t);
     document.getElementById('tb-'+x).classList.toggle('active',x===t);
   });
+  if(t==='squad')renderSquad();
+}
+
+// ── SQUAD ────────────────────────────────────────────────
+let lbSort='xp';
+function weekStart(){const d=new Date();d.setHours(0,0,0,0);d.setDate(d.getDate()-d.getDay());return d.getTime();}
+
+function weekSessions(u){return u.sessions.filter(s=>s.ts>=weekStart());}
+
+function renderSquad(){
+  const ws=weekStart();
+  const allSess=ALL.users.flatMap(u=>u.sessions.filter(s=>s.ts>=ws));
+  document.getElementById('sqSess').textContent=allSess.length;
+  document.getElementById('sqMins').textContent=allSess.reduce((a,b)=>a+b.dur,0);
+  document.getElementById('sqShots').textContent=allSess.reduce((a,b)=>a+(b.shots||0),0);
+  renderChallenge(allSess);
+  renderLeaderboard();
+  renderCoachNotes();
+  // Populate coach note target select
+  const sel=document.getElementById('coachNoteTarget');
+  sel.innerHTML=ALL.users.map(u=>`<option value="${u.id}">${u.name}</option>`).join('');
+}
+
+function renderChallenge(weekSess){
+  const target=ALL.weekTarget||0;
+  const mins=weekSess.reduce((a,b)=>a+b.dur,0);
+  const lbl=document.getElementById('challLbl');
+  const fill=document.getElementById('challFill');
+  const badge=document.getElementById('challBadge');
+  if(!target){
+    lbl.textContent='Set a weekly minutes target for the squad';
+    fill.style.width='0%';fill.className='challenge-prog-fill behind';
+    badge.style.display='none';return;
+  }
+  const pct=Math.min(100,Math.round((mins/target)*100));
+  const dayOfWeek=new Date().getDay();
+  const daysIn=dayOfWeek===0?7:dayOfWeek;
+  const expected=Math.round((daysIn/7)*target);
+  const status=mins>=target?'crushed':mins>=expected*0.85?'on-track':'behind';
+  fill.style.width=pct+'%';
+  fill.className='challenge-prog-fill '+status;
+  lbl.textContent=mins+' / '+target+' minutes this week';
+  badge.style.display='inline-block';
+  badge.className='challenge-badge '+status;
+  badge.textContent=status==='crushed'?'🔥 Crushed it!':status==='on-track'?'✅ On track':'⚠️ Behind pace';
+}
+
+function setLbSort(s){
+  lbSort=s;
+  ['xp','week','streak'].forEach(x=>document.getElementById('lbTab-'+x).classList.toggle('active',x===s));
+  renderLeaderboard();
+}
+
+function renderLeaderboard(){
+  if(!ALL.users.length){document.getElementById('leaderboard').innerHTML='<div class="empty">No players yet!</div>';return;}
+  const ws=weekStart();
+  const ranked=[...ALL.users].sort((a,b)=>{
+    if(lbSort==='xp')return b.player.xp-a.player.xp;
+    if(lbSort==='week')return b.sessions.filter(s=>s.ts>=ws).length-a.sessions.filter(s=>s.ts>=ws).length;
+    return b.player.streak-a.player.streak;
+  });
+  const rankIcons=['🥇','🥈','🥉'];
+  const rankClass=['gold','silver','bronze'];
+  document.getElementById('leaderboard').innerHTML=ranked.map((u,i)=>{
+    const isYou=u.id===CU.id;
+    const weekSess=u.sessions.filter(s=>s.ts>=ws).length;
+    const sub=lbSort==='xp'?getLvNm(u.player.xp)+' · '+weekSess+' sessions this week'
+      :lbSort==='week'?weekSess+' sessions this week · '+u.player.xp+' XP'
+      :'🔥 '+u.player.streak+' day streak · '+u.player.xp+' XP';
+    const val=lbSort==='xp'?u.player.xp+' XP':lbSort==='week'?weekSess+'×':u.player.streak+'🔥';
+    return`<div class="leaderboard-row${isYou?' lb-row-you':''}">
+      <div class="lb-rank ${rankClass[i]||''}">${rankIcons[i]||i+1}</div>
+      <div class="lb-avatar">${u.name[0].toUpperCase()}</div>
+      <div class="lb-info">
+        <div class="lb-name">${u.name}${isYou?' <span style="font-size:11px;background:var(--orange);color:white;padding:1px 6px;border-radius:10px;">you</span>':''}</div>
+        <div class="lb-sub">${sub}</div>
+      </div>
+      <div class="lb-right">
+        <div class="lb-xp">${val}</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// COACH NOTES
+function renderCoachNotes(){
+  if(!ALL.coachNotes||!ALL.coachNotes.length){
+    document.getElementById('coachNotesList').innerHTML='<div style="color:var(--text-muted);font-size:13px;padding:4px 0 10px;">No notes yet — use the form below to encourage a player.</div>';return;
+  }
+  const recent=[...ALL.coachNotes].reverse().slice(0,10);
+  document.getElementById('coachNotesList').innerHTML=recent.map(n=>{
+    const u=ALL.users.find(x=>x.id===n.uid);
+    return`<div style="padding:10px 0;border-bottom:1px solid var(--border);">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
+        <span class="coach-note-badge">Coach</span>
+        <span style="font-weight:700;font-size:13px;">→ ${u?u.name:'Player'}</span>
+        <span style="font-size:11px;color:var(--text-muted);margin-left:auto;">${new Date(n.ts).toLocaleDateString('en-AU',{month:'short',day:'numeric'})}</span>
+      </div>
+      <div class="coach-note-txt">${n.text}</div>
+    </div>`;
+  }).join('');
+}
+
+function addCoachNote(){
+  const txt=document.getElementById('coachNoteIn').value.trim();
+  const uid=document.getElementById('coachNoteTarget').value;
+  if(!txt||!uid)return;
+  if(!ALL.coachNotes)ALL.coachNotes=[];
+  ALL.coachNotes.push({uid,text:txt,ts:Date.now()});
+  saveAll();
+  document.getElementById('coachNoteIn').value='';
+  renderCoachNotes();
+  // Show note on player's home if they're the current user
+  if(CU&&CU.id==uid)renderRecent();
+}
+
+// CHALLENGE TARGET
+function openChallengeEdit(){
+  document.getElementById('challTargetIn').value=ALL.weekTarget||'';
+  document.getElementById('challModal').style.display='flex';
+}
+function saveChallTarget(){
+  const v=parseInt(document.getElementById('challTargetIn').value)||0;
+  ALL.weekTarget=v;saveAll();
+  document.getElementById('challModal').style.display='none';
+  renderSquad();
+}
+
+// SHARE CARD
+function shareCard(){
+  const c=document.createElement('canvas');
+  c.width=800;c.height=420;
+  const ctx=c.getContext('2d');
+  // Background
+  ctx.fillStyle='#1a3a5c';
+  roundRect(ctx,0,0,800,420,24);ctx.fill();
+  // Orange accent bar
+  ctx.fillStyle='#D85A30';
+  roundRect(ctx,0,0,800,8,0);ctx.fill();
+  // Ball emoji area
+  ctx.font='72px serif';ctx.fillText('🏀',40,100);
+  // Name
+  ctx.font='bold 52px "Bangers", cursive, sans-serif';
+  ctx.letterSpacing='2px';
+  ctx.fillStyle='#ffffff';
+  ctx.fillText(CU.name,130,90);
+  // Level pill
+  ctx.fillStyle='#FAEEDA';
+  roundRect(ctx,130,105,160,34,17);ctx.fill();
+  ctx.fillStyle='#633806';
+  ctx.font='bold 16px sans-serif';
+  ctx.fillText('Level '+getLv(CU.player.xp)+' · '+getLvNm(CU.player.xp),148,128);
+  // Divider
+  ctx.strokeStyle='rgba(255,255,255,0.15)';ctx.lineWidth=1;
+  ctx.beginPath();ctx.moveTo(40,160);ctx.lineTo(760,160);ctx.stroke();
+  // Stats
+  const stats=[
+    {v:CU.player.totalSessions,l:'Sessions'},
+    {v:CU.player.totalMinutes,l:'Minutes'},
+    {v:CU.player.xp,l:'Total XP'},
+    {v:CU.player.longestStreak+'🔥',l:'Best Streak'},
+  ];
+  stats.forEach((s,i)=>{
+    const x=40+i*190;
+    ctx.fillStyle='rgba(255,255,255,0.08)';
+    roundRect(ctx,x,180,170,110,12);ctx.fill();
+    ctx.fillStyle='#ffffff';
+    ctx.font='bold 38px sans-serif';
+    ctx.textAlign='center';
+    ctx.fillText(String(s.v),x+85,235);
+    ctx.fillStyle='rgba(255,255,255,0.6)';
+    ctx.font='14px sans-serif';
+    ctx.fillText(s.l,x+85,262);
+    ctx.textAlign='left';
+  });
+  // Week sessions
+  const ws=weekStart();
+  const wSess=CU.sessions.filter(s=>s.ts>=ws).length;
+  ctx.fillStyle='rgba(255,255,255,0.08)';
+  roundRect(ctx,40,312,720,76,12);ctx.fill();
+  ctx.fillStyle='#5DCAA5';ctx.font='bold 20px sans-serif';
+  ctx.fillText('This week: '+wSess+' session'+(wSess!==1?'s':'')+' logged',64,348);
+  ctx.fillStyle='rgba(255,255,255,0.5)';ctx.font='14px sans-serif';
+  ctx.fillText('Hoop Log — track your grind, level up your game',64,375);
+  // Streak
+  ctx.textAlign='right';
+  ctx.fillStyle='#5DCAA5';ctx.font='bold 22px sans-serif';
+  ctx.fillText('🔥 '+CU.player.streak+' day streak',756,348);
+  ctx.textAlign='left';
+
+  c.toBlob(blob=>{
+    const url=URL.createObjectURL(blob);
+    if(navigator.share&&navigator.canShare&&navigator.canShare({files:[new File([blob],'hoop-log-stats.png',{type:'image/png'})]})){
+      navigator.share({title:CU.name+"'s Hoop Log stats",files:[new File([blob],'hoop-log-stats.png',{type:'image/png'})]}).catch(()=>{});
+    } else {
+      const a=document.createElement('a');a.href=url;a.download='hoop-log-stats.png';a.click();
+    }
+    setTimeout(()=>URL.revokeObjectURL(url),3000);
+  },'image/png');
+}
+
+function roundRect(ctx,x,y,w,h,r){
+  ctx.beginPath();ctx.moveTo(x+r,y);ctx.lineTo(x+w-r,y);
+  ctx.quadraticCurveTo(x+w,y,x+w,y+r);ctx.lineTo(x+w,y+h-r);
+  ctx.quadraticCurveTo(x+w,y+h,x+w-r,y+h);ctx.lineTo(x+r,y+h);
+  ctx.quadraticCurveTo(x,y+h,x,y+h-r);ctx.lineTo(x,y+r);
+  ctx.quadraticCurveTo(x,y,x+r,y);ctx.closePath();
 }
 
 // INIT
