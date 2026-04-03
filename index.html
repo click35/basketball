@@ -449,7 +449,7 @@ function refreshUI(){
   if(!CU)return;
   const p=CU.player;
   const{pct,toNext,isMax}=getXPProg(p.xp);
-  document.getElementById('greetTxt').textContent='Hey, '+p.name+'!';
+  document.getElementById('greetTxt').textContent='Hey, '+CU.name+'!';
   document.getElementById('lvTxt').textContent='Level '+getLv(p.xp);
   document.getElementById('lvName').textContent=getLvNm(p.xp);
   document.getElementById('xpLbl').textContent=p.xp+' XP';
